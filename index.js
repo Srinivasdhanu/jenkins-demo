@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("This is my express app");
+  res.send("This is my first docker application");
 });
 
 app.get("/me", (req, res) => {
