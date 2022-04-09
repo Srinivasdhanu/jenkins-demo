@@ -1,27 +1,19 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
+
+# Install dependencies
 RUN apt-get update && \
-    apt-get install build-essential\
-    		libpcre3\
-		libpcre3-dev\
-		zlib1g\
-		zlib1g-dev\
-		libssl1.1\
-		libssl-dev\
-		-y &&\
-     apt-get clean && rm -rf /var/lib/apt/lists/*
-ARG FILENAME="nginx-1.20"
-ARG EXTENSION="tar.gz"
-ADD https://nginx.org/download/${FILENAME}.${EXTENSION} && rm ${FILENAME}.${EXTENSION}
-RUN cd ${FILENAME} && \
-     ./configure \
-        --sbin-path=/usr/bin/nginx \
-	--conf-path=/etc/nginx/nginx.conf \
-	--error-log-path=/var/log/nginx/error.log \
-	--http-log-path=/var/log/nginx/access.log \
-	--with-pcre \
-	--pid-path=/var/run/nginx.pid \
-	--with-http_ssl_module && \
-	make && make install
-RUN rm -rf /${FILENAME}
+ apt-get -y install apache2
+
+# Install apache and write hello world message
+RUN echo 'Hello World!' > /var/www/html/index.html
+
+# Configure apache
+RUN echo '. /etc/apache2/envvars' > /root/run_apache.sh && \
+ echo 'mkdir -p /var/run/apache2' >> /root/run_apache.sh && \
+ echo 'mkdir -p /var/lock/apache2' >> /root/run_apache.sh && \ 
+ echo '/usr/sbin/apache2 -D FOREGROUND' >> /root/run_apache.sh && \ 
+ chmod 755 /root/run_apache.sh
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off"]
+
+CMD /root/run_apache.sh
