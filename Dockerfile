@@ -26,7 +26,7 @@ ENV APP_VERSION="1.21.6" \
     NGINX_HTTP_PORT_NUMBER="" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/nginx/sbin:$PATH"
 
-EXPOSE 8080 8443
+EXPOSE 80
 
 WORKDIR /app
 USER 1001
