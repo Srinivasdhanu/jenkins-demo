@@ -11,9 +11,7 @@ LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 # Download certificate and key from the customer portal (https://account.f5.com)
 # and copy to the build context
-RUN --mount=type=secret,id=nginx-crt,dst=cert.pem \
-    --mount=type=secret,id=nginx-key,dst=cert.key \
-    set -x \
+RUN set -x \
 # Create nginx user/group first, to be consistent throughout Docker variants
     && addgroup -g 101 -S nginx \
     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx \
