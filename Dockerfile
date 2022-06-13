@@ -6,8 +6,9 @@ RUN yum -y install nginx curl
 
 ENV NGINX_HOME /usr/sbin
 ENV MY_HOME /home
+COPY index.html /usr/share/nginx/html/
 WORKDIR /usr/share/nginx/html
-COPY index.html index.html
+
 
 EXPOSE 80
 #ENTRYPOINT ["executable", "arg1"]
