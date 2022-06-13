@@ -10,7 +10,7 @@ COPY index.html /usr/share/nginx/html/
 WORKDIR /usr/share/nginx/html
 
 
-EXPOSE 80
+EXPOSE 5000
 #ENTRYPOINT ["executable", "arg1"]
 ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
 HEALTHCHECK CMD curl localhost:80
