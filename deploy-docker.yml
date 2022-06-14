@@ -6,6 +6,7 @@
     - name: Install ReplicaSet on K8s
       k8s:
         state: present
+        namespace: default
         definition:
           apiVersion: v1
           kind: ReplicaSet
@@ -33,6 +34,7 @@
     - name: k8s service
       k8s:
         state: present
+        namespace: default
         definition:
           apiVerion: v1
           kind: Service
