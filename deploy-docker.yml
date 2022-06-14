@@ -5,13 +5,13 @@
   tasks:
     - name: Install python pip 
       yum:
-        name: python-pip:22.1.2
-        state: present
+        name: python-pip
+        state: latest
         
     - name: Install docker
       yum:
         name: docker
-        state: present
+        state: latest
       
     - name: start docker
       service:
@@ -21,7 +21,7 @@
     - name: Install docker-py python module
       pip:
         name: docker-py
-        state: present
+        state: latest
     - name: Start the container
       docker_container:
         name: deocker-demo
