@@ -5,6 +5,7 @@
   tasks:
     - name: Install ReplicaSet on K8s
       k8s:
+        state: present
         definition:
           apiVersion: v1
           kind: ReplicaSet
@@ -31,6 +32,7 @@
                   - containerPort: 3000
     - name: k8s service
       k8s:
+        state: present
         definition:
           apiVerion: v1
           kind: Service
