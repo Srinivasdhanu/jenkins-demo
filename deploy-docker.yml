@@ -4,31 +4,46 @@
   gather_facts: no
   tasks:
     - name: Install python3
-      yum:
-        name: python3
-        state: latest
-    - name: Install python pip 
-      yum:
-        name: python3-pip
-        state: latest  
-    - name: Install docker
-      yum:
-        name: docker
-        state: latest
-      
-    - name: start docker
-      service:
-        name: docker
-        state: started
-        enabled: yes
-    - name: Install docker-py python module
-      pip:
-        name: docker-py
-        state: latest
-    - name: Start the container
-      docker_container:
-        name: deocker-demo
-        image: "srinivaskollipaka/demo-app:1.0.2"
-        state: started
-        published_ports:
-          - 0.0.0.0:8080:8080
+      k8s:
+        definition:
+          apiVersion: v1
+          kind: ReplicaSet
+          metadata: 
+            name: pod1
+            labels:
+               app: sampleapp
+               tire: front
+          spec:
+            replicas: 2
+            selector:
+               matchLabels:
+                  tire: front
+            template:
+              metadata: 
+                 name: testpod
+                 labels:
+                    tire: front
+              spec:
+                containers:
+                - name: test
+                  image: srinivaskollipaka/test-demo:1.0.1
+                  ports:
+                  - containerPort: 3000
+    - name: k8s service
+      k8s:
+        definition:
+          apiVerion: v1
+          kind: Service
+          metadata: 
+            name: testservice
+            labels:
+              tier: front
+          spec:
+            type: NodePort
+            ports: 
+            - port: 3000
+              nodePort: 32000
+              protocol: TCP
+            selector:
+              tire: front
+         
