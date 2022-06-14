@@ -1,2 +1,2 @@
 [web]
-34.133.177.83 ansible_ssh_user=srinivaskollipaka1310
+34.133.177.83 ansible_ssh_pass=root1319 ansible_ssh_user=srinivaskollipaka1310
