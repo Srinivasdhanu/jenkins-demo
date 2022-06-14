@@ -5,12 +5,8 @@
   tasks:
     - name: Install python pip 
       yum:
-        name: python-pip
-        state: latest
-    - name: Upgrade pip
-      pip:
-        name: pip
-        extra_args: --upgrade   
+        name: python3-pip
+        state: latest  
     - name: Install docker
       yum:
         name: docker
