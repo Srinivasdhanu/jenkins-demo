@@ -1,2 +1,2 @@
 [web]
-35.239.225.221 ansible_user=ansible-node-2
+35.239.225.221 ansible_ssh_pass=root1319 ansible_ssh_user=test
