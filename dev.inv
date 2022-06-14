@@ -1,2 +1,2 @@
 [web]
-54.161.163.176 ansible_user=ec2-user
+35.239.225.221 ansible_user=ansible-node-2
