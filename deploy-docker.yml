@@ -1,69 +1,40 @@
+apiVersion: v1
+kind: ReplicaSet
+metadata: 
+  name: pod1
+  labels:
+    app: sampleapp
+    tire: front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+       tire: front
+  template:
+    metadata: 
+      name: testpod
+      labels:
+        tire: front
+    spec:
+      containers:
+      - name: test
+        image: srinivaskollipaka/test-demo:1.0.1
+        ports:
+        - containerPort: 3000
+
 ---
-- hosts: web
-  become: True
-  gather_facts: no
-  tasks:
-    - name: Install python
-      apt:
-        name: python3
-        state: latest
-    - name: Install pip3
-      apt:
-        name: python3-pip
-        state: latest
-    - name: install kubernetes module
-      pip:
-        name: kubernetes
-        state: latest
-    - name: install openshift module
-      pip:
-        name: openshift
-        state: latest
-    - name: Install ReplicaSet on K8s
-      k8s:
-        state: present
-        namespace: default
-        definition:
-          apiVersion: v1
-          kind: ReplicaSet
-          metadata: 
-            name: pod1
-            labels:
-               app: sampleapp
-               tire: front
-          spec:
-            replicas: 2
-            selector:
-               matchLabels:
-                  tire: front
-            template:
-              metadata: 
-                 name: testpod
-                 labels:
-                    tire: front
-              spec:
-                containers:
-                - name: test
-                  image: srinivaskollipaka/test-demo:1.0.1
-                  ports:
-                  - containerPort: 3000
-    - name: k8s service
-      k8s:
-        state: present
-        namespace: default
-        definition:
-          apiVerion: v1
-          kind: Service
-          metadata: 
-            name: testservice
-            labels:
-              tier: front
-          spec:
-            type: NodePort
-            ports: 
-            - port: 3000
-              nodePort: 32000
-              protocol: TCP
-            selector:
-              tire: front
+apiVerion: v1
+kind: Service
+metadata: 
+  name: testservice
+  labels:
+    tier: front
+spec:
+  type: NodePort
+  ports: 
+  - port: 3000
+    nodePort: 32000
+    protocol: TCP
+    selector:
+      tire: front
          
