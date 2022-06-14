@@ -15,6 +15,10 @@
       pip:
         name: kubernetes
         state: latest
+    - name: install openshift module
+      pip:
+        name: openshift
+        state: latest
     - name: Install ReplicaSet on K8s
       k8s:
         state: present
