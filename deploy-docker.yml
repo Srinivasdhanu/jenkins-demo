@@ -3,34 +3,16 @@
   become: True
   gather_facts: no
   tasks:
-    - name: Install python pip on RedHat family
-      yum:
-        name: python-pip
-        state: present
-      when: 
-        ansible_os_family=="RedHat"
-        
-    - name: Install python pip on Debian family
+    - name: Install python pip 
       apt:
         name: python-pip
         state: present
-      when: 
-        ansible_os_family=="Debian"
         
-    - name: Install docker on RedHat family
-      yum:
-        name: docker
-        state: present
-      when:
-        ansible_os_family=="RedHat"
-        
-    - name: Install docker on Debian family
+    - name: Install docker
       apt:
         name: docker
         state: present
-      when:
-        ansible_os_family=="Debian"
-        
+      
     - name: start docker
       service:
         name: docker
