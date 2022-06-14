@@ -4,12 +4,12 @@
   gather_facts: no
   tasks:
     - name: Install python pip 
-      apt:
+      yum:
         name: python-pip
         state: present
         
     - name: Install docker
-      apt:
+      yum:
         name: docker
         state: present
       
