@@ -16,7 +16,7 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                sh 'docker build . -t srinivaskollipaka/test:1.0.2'
+                sh 'docker build . -t srinivaskollipaka/test:1.0.3'
             }
         }
         
@@ -25,7 +25,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'Docker', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u srinivaskollipaka -p ${dockerhubpwd}'
                 }
-                sh 'docker push srinivaskollipaka/test:1.0.2'
+                sh 'docker push srinivaskollipaka/test:1.0.3'
             }
         }
     }
