@@ -1,25 +1,25 @@
-hosts: web
-become: yes
-user: test
-gather_facts: False
-tasks:
-- name: install docker
-  action: yum name=docker state=latest
+- hosts: web
+  become: yes
+  user: test
+  gather_facts: False
+  tasks:
+  - name: install docker
+    action: yum name=docker state=latest
 
-- name: start and enable docker services
-  action: service name=docker state=started enabled=yes
+  - name: start and enable docker services
+    action: service name=docker state=started enabled=yes
 
-- name: Build image and with buildargs
-  docker_image:
-     path: srinivaskollipaka/myapp
-     name: myapp
-     buildargs:
-       log_volume: /var/log/myapp
-       listen_port: 5000
+  - name: Build image and with buildargs
+    docker_image:
+       path: srinivaskollipaka/myapp
+       name: myapp
+       buildargs:
+         log_volume: /var/log/myapp
+         listen_port: 5000
 
-- name: Tag and push to docker hub
-  docker_image:
-    name: myapp
-    repository: srinivaskollipaka/myapp
-    tag: 1.0
-    push: yes
+  - name: Tag and push to docker hub
+    docker_image:
+      name: myapp
+      repository: srinivaskollipaka/myapp
+      tag: 1.0
+      push: yes
