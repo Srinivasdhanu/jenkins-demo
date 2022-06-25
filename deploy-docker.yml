@@ -1,5 +1,4 @@
----
-hosts: all
+hosts: web
 become: yes
 user: test
 gather_facts: False
