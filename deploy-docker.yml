@@ -1,40 +1,26 @@
-apiVersion: v1
-kind: ReplicaSet
-metadata: 
-  name: pod1
-  labels:
-    app: sampleapp
-    tire: front
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-       tire: front
-  template:
-    metadata: 
-      name: testpod
-      labels:
-        tire: front
-    spec:
-      containers:
-      - name: test
-        image: srinivaskollipaka/test-demo:1.0.1
-        ports:
-        - containerPort: 3000
-
 ---
-apiVerion: v1
-kind: Service
-metadata: 
-  name: testservice
-  labels:
-    tier: front
-spec:
-  type: NodePort
-  ports: 
-  - port: 3000
-    nodePort: 32000
-    protocol: TCP
-    selector:
-      tire: front
-         
+hosts: all
+become: yes
+user: test
+gather_facts: False
+tasks:
+- name: install docker
+  action: yum name=docker state=latest
+
+- name: start and enable docker services
+  action: service name=docker state=started enabled=yes
+
+- name: Build image and with buildargs
+  docker_image:
+     path: srinivaskollipaka/myapp
+     name: myapp
+     buildargs:
+       log_volume: /var/log/myapp
+       listen_port: 5000
+
+- name: Tag and push to docker hub
+  docker_image:
+    name: myapp
+    repository: srinivaskollipaka/myapp
+    tag: 1.0
+    push: yes
