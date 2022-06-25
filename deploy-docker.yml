@@ -4,10 +4,20 @@
   gather_facts: False
   tasks:
   - name: install docker
-    action: yum name=docker state=latest
+    yum:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+    loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
 
   - name: start and enable docker services
-    action: service name=docker state=started enabled=yes
+    service:
+        name: docker
+        state: started
+        enabled: yes
 
   - name: Build image and with buildargs
     docker_image:
