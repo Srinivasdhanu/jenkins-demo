@@ -17,7 +17,7 @@
       state: started
       enabled: yes
   - name: install certain python modules for docker
-    pip2:
+    pip:
       name: "{{ item.name }}"
       version: "{{ item.version }}"
       state: present
