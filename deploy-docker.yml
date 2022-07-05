@@ -3,21 +3,34 @@
   user: test
   gather_facts: False
   tasks:
-  - name: install docker
-    yum:
-        name: "{{item}}"
-        state: latest
-        update_cache: yes
-    loop:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
+  - name: Download the Docker installer
+      get_url:
+        url: https://get.docker.com/
+        dest: /root/install_docker.sh
+        mode: 0700
+      when: docker_check.stderr.find('service could not be found') != -1
 
-  - name: start and enable docker services
-    service:
+    - name: Install Docker
+      shell: /root/install_docker.sh
+      when: docker_check.stderr.find('service could not be found') != -1
+
+    - name: Remove the Docker installer file.
+      file:
+        state: absent
+        path: /root/install_docker.sh
+
+    - name: Enable the Docker daemon in systemd
+      systemd:
+        name: docker
+        enabled: yes
+        masked: no
+
+    - name: Start the Docker daemon
+      systemd:
         name: docker
         state: started
-        enabled: yes
+        masked: no
+
 
   - name: Build image and with buildargs
     docker_image:
