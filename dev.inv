@@ -1,2 +1,2 @@
 [web]
-35.224.33.111 ansible_sudo_pass=root1319 ansible_ssh_user=test
+54.157.226.255 ansible_sudo_pass=root1319 ansible_ssh_user=test
