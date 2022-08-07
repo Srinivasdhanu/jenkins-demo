@@ -13,7 +13,7 @@
       enabled: yes
   - name: copy index file to nginx path
     copy:
-       src: /index.html
+       src: index.html
        dest: /var/www/html/index.html
        mode: 0777
        owner: ec2-user
