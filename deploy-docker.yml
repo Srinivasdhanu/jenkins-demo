@@ -4,7 +4,7 @@
   tasks:
   - name: Install python pip
     yum:
-      name: python3-pip
+      name: python-pip
       state: present
   - name: Install docker
     yum:
@@ -15,16 +15,10 @@
       name: docker
       state: started
       enabled: yes
-  - name: install certain python modules for docker
+  - name: Install docker-py python module
     pip:
-      name: "{{ item.name }}"
-      version: "{{ item.version }}"
+      name: docker-py
       state: present
-    with_items:
-    - { name: docker, version: 2.0.0 }
-    - { name: docker-py, version: 1.10.6 }
- 
-      
   - name: Start the container
     docker_container:
       name: demo
