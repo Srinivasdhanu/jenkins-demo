@@ -1,2 +1,2 @@
 [web]
-54.157.226.255 ansible_sudo_pass=root1319 ansible_ssh_user=test
+54.84.148.33 ansible_ssh_user=ec2-user
