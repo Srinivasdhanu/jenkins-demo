@@ -2,16 +2,16 @@
   become: yes
   gather_facts: False
   tasks:
-  - name: install nginx
+  - name: install httpd
     yum: 
-      name: nginx
+      name: httpd
       state: latest
   - name: enable and start nginx
     service:
-      name: nginx
+      name: httpd
       state: started
       enabled: yes
   - name: copy index file to nginx path
     copy:
        src: /index.html
-       dest: /usr/share/nginx/html/
+       dest: /var/www/html/
