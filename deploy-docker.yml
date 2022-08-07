@@ -21,7 +21,7 @@
       state: present
   - name: Start the container
     docker_container:
-      name: demo
+      name: test
       image: "srinivaskollipaka/demo:1.0.2"
       state: started
       published_ports:
