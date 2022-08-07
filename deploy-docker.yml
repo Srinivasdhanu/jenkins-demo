@@ -2,27 +2,16 @@
   become: yes
   gather_facts: False
   tasks:
-  - name: Install python pip
-    yum:
-      name: python-pip
-      state: present
-  - name: Install docker
-    yum:
-      name: docker
-      state: present
-  - name: start docker
+  - name: install nginx
+    yum: 
+      name: nginx
+      state: latest
+  - name: enable and start nginx
     service:
-      name: docker
+      name: nginx
       state: started
       enabled: yes
-  - name: Install docker-py python module
-    pip:
-      name: docker-py
-      state: present
-  - name: Start the container
-    docker_container:
-      name: demo
-      image: "srinivaskollipaka/demo:1.0.1"
-      state: started
-      published_ports:
-      - 0.0.0.0:8080:8080
+  - name: copy index file to nginx path
+    copy:
+       src: /index.html
+       dest: /usr/share/nginx/html/
